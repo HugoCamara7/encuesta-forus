@@ -1,0 +1,437 @@
+/* =====================================================================
+   ESTILOS
+   Pensado para tablet usada de pie, con el dedo y a veces bajo el sol:
+   botones grandes (minimo 48 px), alto contraste, sin animaciones lentas.
+   ===================================================================== */
+
+/* Paleta corporativa Forus, tomada del Catalogo Control Center:
+   azul de marca #14259B y cyan #009FE3 del logotipo, mas los grises
+   y navys que ya usa la aplicacion existente.                         */
+:root {
+  --azul-forus:  #14259B;   /* azul del logotipo */
+  --cyan-forus:  #009FE3;   /* cyan del logotipo */
+  --azul:        #0B1B46;   /* navy de cabeceras */
+  --azul-claro:  #172554;   /* navy de la barra de pestanas */
+  --verde:       #16A34A;
+  --rojo:        #DC2626;
+  --amarillo:    #B45309;
+  --texto:       #0F172A;
+  --texto-suave: #64748B;
+  --borde:       #DDE6F2;
+  --fondo:       #F8FAFC;
+  --panel:       #FFFFFF;
+  --radio:       10px;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+/* El atributo hidden debe ganarle a cualquier display de mas abajo
+   (los botones son inline-flex y las barras son flex, y sin esto
+   se seguirian viendo aunque el codigo los marque como ocultos). */
+[hidden] { display: none !important; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 17px;
+  line-height: 1.45;
+  color: var(--texto);
+  background: var(--fondo);
+  padding-bottom: 130px;   /* espacio para la barra fija de guardar */
+}
+
+/* ---------------- Cabecera ---------------- */
+
+.cabecera {
+  background: var(--azul);
+  color: #fff;
+  padding: 12px 16px;
+  padding-top: max(12px, env(safe-area-inset-top));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cabecera-marca { display: flex; align-items: center; gap: 14px; min-width: 0; }
+
+/* Logotipo Forus en blanco, con el cyan corporativo intacto */
+.logo-forus { height: 26px; width: auto; flex: none; display: block; }
+
+.cabecera-sep {
+  width: 1px;
+  height: 30px;
+  background: rgba(255,255,255,.28);
+  flex: none;
+}
+
+.cabecera h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.version { font-size: 12px; opacity: .7; }
+
+/* Pie con la marca */
+.pie-marca {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+  opacity: .8;
+}
+.pie-marca img { height: 30px; width: auto; }
+
+.chip-red {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.chip-red.en-linea  { background: rgba(255,255,255,.18); color: #eaf5ee; }
+.chip-red.sin-linea { background: var(--amarillo); color: #fff; }
+
+/* ---------------- Pestanas ---------------- */
+
+.pestanas {
+  display: flex;
+  background: var(--azul-claro);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.pestana {
+  flex: 1;
+  min-height: 52px;
+  border: 0;
+  background: transparent;
+  color: #d7e0ef;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border-bottom: 4px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.pestana.activa {
+  color: #fff;
+  background: rgba(255,255,255,.12);
+  border-bottom-color: var(--cyan-forus);
+}
+
+.globo {
+  background: var(--cyan-forus);
+  color: #fff;
+  border-radius: 999px;
+  padding: 1px 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ---------------- Avisos ---------------- */
+
+.aviso {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 16px;
+  font-weight: 600;
+  color: #fff;
+  transition: max-height .18s ease, padding .18s ease;
+  position: sticky;
+  top: 52px;
+  z-index: 19;
+}
+.aviso.visible { max-height: 120px; padding: 12px 16px; }
+.aviso.ok      { background: var(--verde); }
+.aviso.error   { background: var(--rojo); }
+.aviso.info    { background: var(--amarillo); }
+
+main { max-width: 780px; margin: 0 auto; padding: 16px; }
+
+/* ---------------- Secciones y campos ---------------- */
+
+.seccion {
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--azul);
+  border-bottom: 2px solid var(--borde);
+  padding-bottom: 6px;
+  margin: 26px 0 14px;
+}
+.seccion:first-child { margin-top: 4px; }
+
+.campo {
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.campo.con-error { border-color: var(--rojo); border-width: 2px; }
+
+.etiqueta {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.req { color: var(--rojo); }
+
+.entrada {
+  width: 100%;
+  min-height: 50px;
+  padding: 11px 12px;
+  font-size: 17px;
+  font-family: inherit;
+  color: var(--texto);
+  background: #fff;
+  border: 1.5px solid var(--borde);
+  border-radius: 8px;
+}
+
+.entrada:focus {
+  outline: 3px solid rgba(0,159,227,.35);
+  border-color: var(--cyan-forus);
+}
+
+textarea.entrada { resize: vertical; min-height: 90px; }
+
+.ayuda { font-size: 14px; color: var(--texto-suave); margin: 8px 0 0; }
+
+.error { color: var(--rojo); font-size: 14px; font-weight: 600; margin-top: 6px; }
+.error:empty { display: none; }
+
+/* ---------------- Opciones tipo boton ---------------- */
+
+.opciones { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.opcion {
+  flex: 1 1 auto;
+  min-width: 90px;
+  min-height: 52px;
+  padding: 10px 14px;
+  font-size: 16px;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--texto);
+  background: #F1F5F9;
+  border: 2px solid var(--borde);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.opcion.activa {
+  background: var(--azul-forus);
+  border-color: var(--azul-forus);
+  color: #fff;
+}
+
+.opciones.dos .opcion { flex: 1 1 45%; }
+
+.opciones.escala .opcion { min-width: 56px; font-size: 20px; }
+
+/* ---------------- Foto y firma ---------------- */
+
+.foto-caja, .firma-caja { display: flex; flex-direction: column; gap: 10px; }
+
+.foto-vista {
+  max-width: 100%;
+  max-height: 240px;
+  object-fit: contain;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  background: #F8FAFC;
+}
+
+.firma {
+  width: 100%;
+  height: 190px;
+  background: #fff;
+  border: 2px dashed var(--borde);
+  border-radius: 8px;
+  touch-action: none;      /* imprescindible: evita que la pagina se desplace al firmar */
+  cursor: crosshair;
+}
+
+.fila-botones { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ---------------- Botones ---------------- */
+
+.boton {
+  min-height: 52px;
+  padding: 12px 20px;
+  font-size: 17px;
+  font-weight: 600;
+  font-family: inherit;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.boton:disabled { opacity: .55; cursor: default; }
+
+.boton.principal  { background: var(--azul-forus); color: #fff; }
+.boton.secundario { background: #fff; color: var(--azul-forus); border-color: var(--azul-forus); }
+.boton.peligro    { background: #fff; color: var(--rojo); border-color: var(--rojo); }
+.boton.chico      { min-height: 44px; padding: 8px 14px; font-size: 15px; }
+
+.etiqueta-archivo { cursor: pointer; }
+
+.pila { display: flex; flex-direction: column; gap: 10px; }
+
+/* ---------------- Barra fija de guardar ---------------- */
+
+.barra-guardar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 30;
+  display: flex;
+  gap: 10px;
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  background: rgba(255,255,255,.97);
+  border-top: 1px solid var(--borde);
+  box-shadow: 0 -3px 14px rgba(0,0,0,.10);
+}
+
+.barra-guardar .principal { flex: 2; }
+.barra-guardar .secundario { flex: 1; }
+
+/* ---------------- Lista de registros ---------------- */
+
+.buscar { margin-bottom: 12px; }
+
+.resumen { color: var(--texto-suave); font-size: 15px; margin: 0 0 12px; }
+
+.vacio {
+  text-align: center;
+  color: var(--texto-suave);
+  padding: 40px 16px;
+  background: var(--panel);
+  border: 1px dashed var(--borde);
+  border-radius: var(--radio);
+}
+
+.tarjeta {
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 14px;
+  margin-bottom: 10px;
+}
+
+.tarjeta-cab { display: flex; align-items: baseline; gap: 10px; }
+
+.tarjeta-num {
+  background: var(--azul);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 999px;
+  flex: none;
+}
+
+.tarjeta-titulo { font-weight: 600; font-size: 17px; }
+
+.tarjeta-meta { color: var(--texto-suave); font-size: 14px; margin: 6px 0 12px; }
+
+.tarjeta-acciones { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ---------------- Panel de aviso ---------------- */
+
+.panel-aviso {
+  background: #EFF8FE;
+  border: 2px solid var(--cyan-forus);
+  border-radius: var(--radio);
+  padding: 18px;
+  text-align: center;
+}
+.panel-aviso p { color: #0B4A6F; }
+
+/* ---------------- Detalle ---------------- */
+
+.detalle {
+  width: min(660px, 94vw);
+  max-height: 88vh;
+  border: 0;
+  border-radius: var(--radio);
+  padding: 0;
+  overflow: auto;
+}
+.detalle::backdrop { background: rgba(0,0,0,.55); }
+
+.detalle-cab {
+  position: sticky;
+  top: 0;
+  background: var(--azul);
+  color: #fff;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.detalle-cab .boton.secundario { background: #fff; }
+
+#detalle-cuerpo { padding: 16px; }
+
+.detalle-meta {
+  background: #F1F5F9;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: var(--texto-suave);
+}
+
+.detalle-fila { padding: 10px 0; border-bottom: 1px solid var(--borde); }
+.detalle-fila:last-child { border-bottom: 0; }
+
+.detalle-etq { font-size: 14px; color: var(--texto-suave); }
+.detalle-val { font-weight: 600; }
+
+.detalle-img {
+  max-width: 100%;
+  max-height: 300px;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  margin-top: 6px;
+}
+
+.pie {
+  text-align: center;
+  color: var(--texto-suave);
+  font-size: 13px;
+  margin: 34px 0 10px;
+}
+
+/* ---------------- Tablet horizontal ---------------- */
+
+@media (min-width: 700px) {
+  body { font-size: 18px; }
+  .barra-guardar { justify-content: center; }
+  .barra-guardar .boton { max-width: 320px; }
+  .pila { flex-direction: row; flex-wrap: wrap; }
+  .pila .boton { flex: 1 1 240px; }
+}
