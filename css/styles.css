@@ -1,33 +1,42 @@
 /* =====================================================================
    ESTILOS
-   Pensado para tablet usada de pie, con el dedo y a veces bajo el sol:
-   botones grandes (minimo 48 px), alto contraste, sin animaciones lentas.
+   Tablet o celular, usado de pie y con el dedo: botones grandes
+   (minimo 48 px), alto contraste, sin animaciones lentas.
+
+   IDENTIDAD POR MARCA
+   Las variables --marca-* las reescribe MARCA.aplicarIdentidad() al
+   entrar al contexto de una marca. Toda la interfaz las lee, asi que
+   cambia entera sin necesidad de reglas por marca.
    ===================================================================== */
 
-/* Paleta corporativa Forus, tomada del Catalogo Control Center:
-   azul de marca #14259B y cyan #009FE3 del logotipo, mas los grises
-   y navys que ya usa la aplicacion existente.                         */
 :root {
-  --azul-forus:  #14259B;   /* azul del logotipo */
-  --cyan-forus:  #009FE3;   /* cyan del logotipo */
-  --azul:        #0B1B46;   /* navy de cabeceras */
-  --azul-claro:  #172554;   /* navy de la barra de pestanas */
+  /* Corporativo Forus (Catalogo Control Center) */
+  --azul-forus:  #14259B;
+  --cyan-forus:  #009FE3;
+  --azul:        #0B1B46;
+  --azul-claro:  #172554;
+
+  /* Identidad activa. Por defecto es Forus; una marca la sobrescribe. */
+  --marca-primario: #14259B;
+  --marca-oscuro:   #0B1B46;
+  --marca-suave:    #EEF2FB;
+  --marca-sobre:    #FFFFFF;
+
   --verde:       #16A34A;
   --rojo:        #DC2626;
   --amarillo:    #B45309;
   --texto:       #0F172A;
   --texto-suave: #64748B;
   --borde:       #DDE6F2;
+  --borde-2:     #E2E8F0;
   --fondo:       #F8FAFC;
   --panel:       #FFFFFF;
-  --radio:       10px;
+  --radio:       12px;
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-/* El atributo hidden debe ganarle a cualquier display de mas abajo
-   (los botones son inline-flex y las barras son flex, y sin esto
-   se seguirian viendo aunque el codigo los marque como ocultos). */
+/* El atributo hidden debe ganarle a cualquier display de mas abajo */
 [hidden] { display: none !important; }
 
 html { -webkit-text-size-adjust: 100%; }
@@ -39,7 +48,7 @@ body {
   line-height: 1.45;
   color: var(--texto);
   background: var(--fondo);
-  padding-bottom: 130px;   /* espacio para la barra fija de guardar */
+  padding-bottom: 120px;
 }
 
 /* ---------------- Cabecera ---------------- */
@@ -47,51 +56,59 @@ body {
 .cabecera {
   background: var(--azul);
   color: #fff;
-  padding: 12px 16px;
-  padding-top: max(12px, env(safe-area-inset-top));
+  padding: 10px 14px;
+  padding-top: max(10px, env(safe-area-inset-top));
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
 }
 
-.cabecera-marca { display: flex; align-items: center; gap: 14px; min-width: 0; }
-
-/* Logotipo Forus en blanco, con el cyan corporativo intacto */
-.logo-forus { height: 26px; width: auto; flex: none; display: block; }
-
-.cabecera-sep {
-  width: 1px;
-  height: 30px;
-  background: rgba(255,255,255,.28);
+.btn-atras {
   flex: none;
+  width: 40px; height: 40px;
+  border: 0;
+  border-radius: 10px;
+  background: rgba(255,255,255,.14);
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  font-family: inherit;
 }
+
+.cabecera-marca { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
+
+.logo-forus { height: 24px; width: auto; flex: none; display: block; }
+
+.cabecera-sep { width: 1px; height: 28px; background: rgba(255,255,255,.26); flex: none; }
+
+.cabecera-txt { min-width: 0; }
 
 .cabecera h1 {
   margin: 0;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.version { font-size: 12px; opacity: .7; }
+.version { font-size: 11px; opacity: .65; }
 
-/* Pie con la marca */
-.pie-marca {
+.cabecera-der { display: flex; align-items: center; gap: 8px; flex: none; }
+
+.marca-cabecera {
+  background: #fff;
+  border-radius: 8px;
+  padding: 5px 9px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 30px;
-  opacity: .8;
 }
-.pie-marca img { height: 30px; width: auto; }
+.marca-cabecera img { height: 18px; width: auto; display: block; }
 
 .chip-red {
-  font-size: 12px;
-  padding: 4px 10px;
+  font-size: 11px;
+  padding: 4px 9px;
   border-radius: 999px;
   white-space: nowrap;
   font-weight: 600;
@@ -101,44 +118,25 @@ body {
 
 /* ---------------- Pestanas ---------------- */
 
-.pestanas {
-  display: flex;
-  background: var(--azul-claro);
-  position: sticky;
-  top: 0;
-  z-index: 20;
-}
+.pestanas { display: flex; background: var(--azul-claro); position: sticky; top: 0; z-index: 20; }
 
 .pestana {
   flex: 1;
-  min-height: 52px;
+  min-height: 50px;
   border: 0;
   background: transparent;
   color: #d7e0ef;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
   border-bottom: 4px solid transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
 }
 
 .pestana.activa {
   color: #fff;
   background: rgba(255,255,255,.12);
   border-bottom-color: var(--cyan-forus);
-}
-
-.globo {
-  background: var(--cyan-forus);
-  color: #fff;
-  border-radius: 999px;
-  padding: 1px 8px;
-  font-size: 13px;
-  font-weight: 700;
 }
 
 /* ---------------- Avisos ---------------- */
@@ -151,28 +149,39 @@ body {
   color: #fff;
   transition: max-height .18s ease, padding .18s ease;
   position: sticky;
-  top: 52px;
+  top: 50px;
   z-index: 19;
 }
-.aviso.visible { max-height: 120px; padding: 12px 16px; }
-.aviso.ok      { background: var(--verde); }
-.aviso.error   { background: var(--rojo); }
-.aviso.info    { background: var(--amarillo); }
+.aviso.visible { max-height: 130px; padding: 12px 16px; }
+.aviso.ok    { background: var(--verde); }
+.aviso.error { background: var(--rojo); }
+.aviso.info  { background: var(--amarillo); }
 
-main { max-width: 780px; margin: 0 auto; padding: 16px; }
+main { max-width: 860px; margin: 0 auto; padding: 16px; }
+
+.intro { color: var(--texto-suave); margin: 0 0 16px; }
 
 /* ---------------- Secciones y campos ---------------- */
 
 .seccion {
-  font-size: 15px;
+  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: .6px;
-  color: var(--azul);
+  color: var(--marca-oscuro);
   border-bottom: 2px solid var(--borde);
   padding-bottom: 6px;
   margin: 26px 0 14px;
 }
-.seccion:first-child { margin-top: 4px; }
+.bloque-seccion:first-child .seccion { margin-top: 2px; }
+
+.sub-seccion {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--texto-suave);
+  margin: 16px 0 8px;
+  font-weight: 700;
+}
 
 .campo {
   background: var(--panel);
@@ -184,14 +193,10 @@ main { max-width: 780px; margin: 0 auto; padding: 16px; }
 
 .campo.con-error { border-color: var(--rojo); border-width: 2px; }
 
-.etiqueta {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 8px;
-  font-size: 16px;
-}
+.etiqueta { display: block; font-weight: 600; margin-bottom: 8px; font-size: 16px; }
 
 .req { color: var(--rojo); }
+.opcional { color: var(--texto-suave); font-weight: 400; font-size: 13px; }
 
 .entrada {
   width: 100%;
@@ -206,13 +211,14 @@ main { max-width: 780px; margin: 0 auto; padding: 16px; }
 }
 
 .entrada:focus {
-  outline: 3px solid rgba(0,159,227,.35);
-  border-color: var(--cyan-forus);
+  outline: 3px solid color-mix(in srgb, var(--marca-primario) 30%, transparent);
+  border-color: var(--marca-primario);
 }
 
 textarea.entrada { resize: vertical; min-height: 90px; }
 
 .ayuda { font-size: 14px; color: var(--texto-suave); margin: 8px 0 0; }
+.ayuda:empty { display: none; }
 
 .error { color: var(--rojo); font-size: 14px; font-weight: 600; margin-top: 6px; }
 .error:empty { display: none; }
@@ -223,7 +229,7 @@ textarea.entrada { resize: vertical; min-height: 90px; }
 
 .opcion {
   flex: 1 1 auto;
-  min-width: 90px;
+  min-width: 88px;
   min-height: 52px;
   padding: 10px 14px;
   font-size: 16px;
@@ -237,35 +243,30 @@ textarea.entrada { resize: vertical; min-height: 90px; }
 }
 
 .opcion.activa {
-  background: var(--azul-forus);
-  border-color: var(--azul-forus);
-  color: #fff;
+  background: var(--marca-primario);
+  border-color: var(--marca-primario);
+  color: var(--marca-sobre);
 }
 
 .opciones.dos .opcion { flex: 1 1 45%; }
-
 .opciones.escala .opcion { min-width: 56px; font-size: 20px; }
+.opciones.nps .opcion { min-width: 46px; flex: 0 1 auto; font-size: 17px; padding: 10px 8px; }
 
 /* ---------------- Foto y firma ---------------- */
 
 .foto-caja, .firma-caja { display: flex; flex-direction: column; gap: 10px; }
 
 .foto-vista {
-  max-width: 100%;
-  max-height: 240px;
-  object-fit: contain;
-  border: 1px solid var(--borde);
-  border-radius: 8px;
-  background: #F8FAFC;
+  max-width: 100%; max-height: 240px; object-fit: contain;
+  border: 1px solid var(--borde); border-radius: 8px; background: #F8FAFC;
 }
 
 .firma {
-  width: 100%;
-  height: 190px;
+  width: 100%; height: 190px;
   background: #fff;
   border: 2px dashed var(--borde);
   border-radius: 8px;
-  touch-action: none;      /* imprescindible: evita que la pagina se desplace al firmar */
+  touch-action: none;      /* imprescindible: evita que la pagina se mueva al firmar */
   cursor: crosshair;
 }
 
@@ -276,7 +277,7 @@ textarea.entrada { resize: vertical; min-height: 90px; }
 .boton {
   min-height: 52px;
   padding: 12px 20px;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   font-family: inherit;
   border-radius: 8px;
@@ -290,16 +291,16 @@ textarea.entrada { resize: vertical; min-height: 90px; }
 
 .boton:disabled { opacity: .55; cursor: default; }
 
-.boton.principal  { background: var(--azul-forus); color: #fff; }
-.boton.secundario { background: #fff; color: var(--azul-forus); border-color: var(--azul-forus); }
+.boton.principal  { background: var(--marca-primario); color: var(--marca-sobre); }
+.boton.secundario { background: #fff; color: var(--marca-oscuro); border-color: var(--borde); }
 .boton.peligro    { background: #fff; color: var(--rojo); border-color: var(--rojo); }
-.boton.chico      { min-height: 44px; padding: 8px 14px; font-size: 15px; }
+.boton.chico      { min-height: 42px; padding: 8px 14px; font-size: 14px; }
 
 .etiqueta-archivo { cursor: pointer; }
 
 .pila { display: flex; flex-direction: column; gap: 10px; }
 
-/* ---------------- Barra fija de guardar ---------------- */
+/* ---------------- Barra inferior de accion ---------------- */
 
 .barra-guardar {
   position: fixed;
@@ -314,23 +315,96 @@ textarea.entrada { resize: vertical; min-height: 90px; }
   box-shadow: 0 -3px 14px rgba(0,0,0,.10);
 }
 
+.barra-guardar .boton { flex: 1; }
 .barra-guardar .principal { flex: 2; }
-.barra-guardar .secundario { flex: 1; }
 
-/* ---------------- Lista de registros ---------------- */
+/* ---------------- Tarjetas de plantilla y marca ---------------- */
 
-.buscar { margin-bottom: 12px; }
-
-.resumen { color: var(--texto-suave); font-size: 15px; margin: 0 0 12px; }
-
-.vacio {
-  text-align: center;
-  color: var(--texto-suave);
-  padding: 40px 16px;
-  background: var(--panel);
-  border: 1px dashed var(--borde);
-  border-radius: var(--radio);
+.rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
 }
+
+.card-plantilla, .card-marca {
+  background: var(--panel);
+  border: 1.5px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 18px;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 150px;
+  transition: border-color .12s ease, transform .12s ease, box-shadow .12s ease;
+}
+
+.card-plantilla:hover, .card-marca:hover {
+  border-color: var(--marca-primario);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(15,23,42,.10);
+}
+
+.card-icono { font-size: 30px; line-height: 1; }
+
+.card-titulo { margin: 0; font-size: 17px; font-weight: 700; color: var(--texto); }
+
+.card-desc { margin: 0; font-size: 14px; color: var(--texto-suave); flex: 1; }
+
+.card-pie {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  color: var(--marca-primario);
+}
+
+/* Tarjeta de marca: usa el color de esa marca, no el de la sesion */
+.card-marca { align-items: flex-start; }
+.card-marca:hover { border-color: var(--marca-primario); }
+
+.marca-logo { display: flex; align-items: center; }
+.marca-logo img { display: block; width: auto; }
+
+.marca-logo.card {
+  height: 56px;
+  background: var(--marca-suave);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 4px;
+}
+.marca-logo.card img { max-height: 40px; max-width: 170px; object-fit: contain; }
+
+.marca-logo.lista img { max-height: 28px; max-width: 130px; object-fit: contain; }
+.marca-logo.chip  img { max-height: 18px; max-width: 90px;  object-fit: contain; }
+
+.marca-logo-texto {
+  font-weight: 800;
+  letter-spacing: .5px;
+  font-size: 17px;
+}
+.marca-logo.chip .marca-logo-texto { font-size: 12px; }
+
+/* ---------------- Grupos por marca en el inicio ---------------- */
+
+.grupo-marca { margin-bottom: 26px; }
+
+.grupo-cab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  background: var(--panel);
+  border-left: 5px solid var(--marca-primario);
+  border-radius: 8px;
+}
+
+.grupo-conteo { margin-left: auto; font-size: 13px; color: var(--texto-suave); font-weight: 600; }
+
+/* ---------------- Tarjetas de datos ---------------- */
 
 .tarjeta {
   background: var(--panel);
@@ -340,34 +414,136 @@ textarea.entrada { resize: vertical; min-height: 90px; }
   margin-bottom: 10px;
 }
 
-.tarjeta-cab { display: flex; align-items: baseline; gap: 10px; }
+.tarjeta.activacion { border-left: 4px solid var(--marca-primario); }
+
+.tarjeta-cab { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
 .tarjeta-num {
-  background: var(--azul);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 700;
-  padding: 2px 9px;
-  border-radius: 999px;
-  flex: none;
+  background: var(--marca-primario);
+  color: var(--marca-sobre);
+  font-size: 12px; font-weight: 700;
+  padding: 2px 9px; border-radius: 999px; flex: none;
 }
 
-.tarjeta-titulo { font-weight: 600; font-size: 17px; }
+.tarjeta-titulo { margin: 0; font-weight: 700; font-size: 17px; }
+
+.chip-estado {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 999px; letter-spacing: .4px;
+}
+.chip-estado.activa  { background: #DCFCE7; color: #14532D; }
+.chip-estado.cerrada { background: #F1F5F9; color: #475569; }
 
 .tarjeta-meta { color: var(--texto-suave); font-size: 14px; margin: 6px 0 12px; }
 
 .tarjeta-acciones { display: flex; gap: 8px; flex-wrap: wrap; }
 
-/* ---------------- Panel de aviso ---------------- */
+/* ---------------- Configuracion de preguntas ---------------- */
+
+.lista-config {
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 12px 14px;
+}
+
+.fila-config {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--borde-2);
+}
+.fila-config:last-child { border-bottom: 0; }
+
+.fila-config-txt { flex: 1; min-width: 0; }
+.fila-config-etq { font-weight: 600; font-size: 15px; }
+.fila-config-tipo { font-size: 13px; color: var(--texto-suave); }
+
+.fila-config-btns { display: flex; gap: 6px; flex: none; }
+
+.pastilla {
+  min-height: 38px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: inherit;
+  border-radius: 999px;
+  border: 1.5px solid var(--borde);
+  background: #F1F5F9;
+  color: var(--texto-suave);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.pastilla.activa {
+  background: var(--marca-primario);
+  border-color: var(--marca-primario);
+  color: var(--marca-sobre);
+}
+
+.pastilla.quitar { color: var(--rojo); border-color: #FCA5A5; background: #fff; }
+
+.fila-agregar { display: flex; gap: 8px; align-items: stretch; flex-wrap: wrap; }
+.fila-agregar .entrada { flex: 1 1 200px; }
+
+/* ---------------- Cabecera de activacion al encuestar ---------------- */
+
+.cab-activacion {
+  background: var(--marca-suave);
+  border-left: 4px solid var(--marca-primario);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+.cab-activacion-nombre { font-weight: 700; font-size: 16px; }
+.cab-activacion-meta { font-size: 13px; color: var(--texto-suave); }
+
+/* ---------------- Filtros de resultados ---------------- */
+
+.panel-filtros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.campo-filtro { display: flex; flex-direction: column; gap: 4px; }
+
+.etiqueta-filtro {
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .4px; color: var(--texto-suave);
+}
+
+.buscar { margin-bottom: 12px; }
+
+.resumen { color: var(--texto-suave); font-size: 15px; margin: 0 0 12px; }
+
+/* ---------------- Estados vacios ---------------- */
+
+.vacio-grande {
+  text-align: center;
+  padding: 44px 20px;
+  background: var(--panel);
+  border: 1px dashed var(--borde);
+  border-radius: var(--radio);
+}
+.vacio-icono { font-size: 44px; }
+.vacio-grande h2 { margin: 10px 0 6px; font-size: 20px; }
+.vacio-grande p { color: var(--texto-suave); max-width: 46ch; margin: 0 auto 18px; }
 
 .panel-aviso {
-  background: #EFF8FE;
-  border: 2px solid var(--cyan-forus);
+  background: var(--marca-suave);
+  border: 2px solid var(--marca-primario);
   border-radius: var(--radio);
-  padding: 18px;
-  text-align: center;
+  padding: 16px;
+  margin-bottom: 16px;
 }
-.panel-aviso p { color: #0B4A6F; }
+.panel-aviso p { margin: 6px 0 12px; color: var(--texto); }
 
 /* ---------------- Detalle ---------------- */
 
@@ -382,15 +558,11 @@ textarea.entrada { resize: vertical; min-height: 90px; }
 .detalle::backdrop { background: rgba(0,0,0,.55); }
 
 .detalle-cab {
-  position: sticky;
-  top: 0;
-  background: var(--azul);
+  position: sticky; top: 0;
+  background: var(--marca-oscuro);
   color: #fff;
   padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
 }
 .detalle-cab .boton.secundario { background: #fff; }
 
@@ -412,26 +584,36 @@ textarea.entrada { resize: vertical; min-height: 90px; }
 .detalle-val { font-weight: 600; }
 
 .detalle-img {
-  max-width: 100%;
-  max-height: 300px;
-  border: 1px solid var(--borde);
-  border-radius: 8px;
-  margin-top: 6px;
+  max-width: 100%; max-height: 300px;
+  border: 1px solid var(--borde); border-radius: 8px; margin-top: 6px;
 }
 
-.pie {
-  text-align: center;
-  color: var(--texto-suave);
-  font-size: 13px;
-  margin: 34px 0 10px;
-}
+/* ---------------- Pie ---------------- */
 
-/* ---------------- Tablet horizontal ---------------- */
+.pie-marca {
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 34px; opacity: .75;
+}
+.pie-marca img { height: 28px; width: auto; }
+
+/* ---------------- Pantallas grandes ---------------- */
 
 @media (min-width: 700px) {
   body { font-size: 18px; }
   .barra-guardar { justify-content: center; }
-  .barra-guardar .boton { max-width: 320px; }
+  .barra-guardar .boton { max-width: 300px; }
   .pila { flex-direction: row; flex-wrap: wrap; }
   .pila .boton { flex: 1 1 240px; }
+}
+
+/* ---------------- Celular ---------------- */
+
+@media (max-width: 560px) {
+  main { padding: 12px; }
+  .rejilla { grid-template-columns: 1fr; }
+  .fila-config { flex-wrap: wrap; }
+  .fila-config-btns { width: 100%; }
+  .pastilla { flex: 1; }
+  .cabecera h1 { font-size: 15px; }
+  .logo-forus { height: 20px; }
 }
