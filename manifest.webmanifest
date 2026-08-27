@@ -1,7 +1,7 @@
 {
-  "name": "Forus - Encuesta de Clientes",
-  "short_name": "Encuesta Forus",
-  "description": "Registro de encuestas de clientes sin conexion a internet - Forus S.A.",
+  "name": "Encuestas Forus",
+  "short_name": "Encuestas",
+  "description": "Encuestas y captacion de clientes por marca, sin conexion a internet - Forus S.A.",
   "lang": "es-PE",
   "dir": "ltr",
   "start_url": "./",

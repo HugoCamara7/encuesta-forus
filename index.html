@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Encuesta</title>
+<title>Encuestas Forus</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -16,133 +16,52 @@
 <body>
 
 <header class="cabecera">
+  <button id="btn-atras" class="btn-atras" type="button" aria-label="Volver" hidden>‹</button>
+
   <div class="cabecera-marca">
     <img class="logo-forus" src="icons/forus-logo-blanco.png" alt="Forus">
     <div class="cabecera-sep"></div>
-    <div>
-      <h1 id="titulo-app">Encuesta</h1>
+    <div class="cabecera-txt">
+      <h1 id="titulo-vista">Activaciones</h1>
       <span id="version" class="version"></span>
     </div>
   </div>
-  <div id="estado-red" class="chip-red" title="Estado de la conexion"></div>
+
+  <div class="cabecera-der">
+    <span id="marca-cabecera" class="marca-cabecera" hidden></span>
+    <span id="estado-red" class="chip-red" title="Estado de la conexion"></span>
+  </div>
 </header>
 
-<nav class="pestanas">
-  <button id="tab-formulario" class="pestana activa" type="button">
-    Nueva
-  </button>
-  <button id="tab-lista" class="pestana" type="button">
-    Guardadas <span id="contador" class="globo" hidden>0</span>
-  </button>
-  <button id="tab-ajustes" class="pestana" type="button">
-    Ajustes
-  </button>
+<nav id="pestanas" class="pestanas">
+  <button id="tab-inicio"     class="pestana activa" type="button">Activaciones</button>
+  <button id="tab-resultados" class="pestana"        type="button">Resultados</button>
+  <button id="tab-ajustes"    class="pestana"        type="button">Ajustes</button>
 </nav>
 
 <div id="aviso" class="aviso" role="status" aria-live="polite"></div>
 
-<main>
+<main id="contenido"></main>
 
-  <!-- ============ VISTA: FORMULARIO ============ -->
-  <section id="vista-formulario">
-    <form id="formulario" autocomplete="off" novalidate></form>
+<div id="barra-accion" class="barra-guardar" hidden></div>
 
-    <div id="barra-guardar" class="barra-guardar">
-      <button id="btn-limpiar" class="boton secundario" type="button">Limpiar</button>
-      <button id="btn-cancelar-edicion" class="boton secundario" type="button" hidden>Cancelar</button>
-      <button id="btn-guardar" class="boton principal" type="button">
-        <span id="txt-guardar">Guardar encuesta</span>
-      </button>
-    </div>
-  </section>
-
-  <!-- ============ VISTA: REGISTROS GUARDADOS ============ -->
-  <section id="vista-lista" hidden>
-    <input id="buscar" class="entrada buscar" type="search"
-           placeholder="Buscar por nombre, documento, celular...">
-    <p id="resumen-lista" class="resumen"></p>
-    <div id="lista"></div>
-  </section>
-
-  <!-- ============ VISTA: AJUSTES ============ -->
-  <section id="vista-ajustes" hidden>
-
-    <h2 class="seccion">Configuracion de esta tablet</h2>
-    <p class="ayuda">Se completa una sola vez. Queda guardado en el equipo.</p>
-
-    <div class="campo">
-      <label class="etiqueta" for="in-encuestador">Nombre del encuestador <span class="req">*</span></label>
-      <input id="in-encuestador" class="entrada" type="text" placeholder="Ej: Ana Quispe">
-    </div>
-
-    <div class="campo">
-      <label class="etiqueta" for="in-punto">Punto de trabajo <span class="req">*</span></label>
-      <select id="in-punto" class="entrada"></select>
-    </div>
-
-    <h2 class="seccion">Descargar los datos</h2>
-    <p class="ayuda">
-      Los archivos van a la carpeta <strong>Descargas</strong> de la tablet. De ahi los
-      pasas por cable USB, correo o OneDrive. Se puede hacer sin internet.
-    </p>
-
-    <div class="pila">
-      <button id="btn-excel" class="boton principal" type="button">Descargar Excel (.xlsx)</button>
-      <button id="btn-csv" class="boton secundario" type="button">Descargar CSV</button>
-      <button id="btn-imagenes" class="boton secundario" type="button">Descargar fotos y firmas (.zip)</button>
-    </div>
-
-    <h2 class="seccion">Respaldo de seguridad</h2>
-    <p class="ayuda">
-      El respaldo guarda todo tal cual, incluidas las fotos. Sirve para restaurar
-      en otra tablet si esta se malogra o se pierde. Hazlo al final de cada jornada.
-    </p>
-
-    <div class="pila">
-      <button id="btn-respaldo" class="boton secundario" type="button">Crear respaldo (.json)</button>
-      <label class="boton secundario etiqueta-archivo">
-        Restaurar desde un respaldo
-        <input id="in-importar" type="file" accept=".json,application/json" hidden>
-      </label>
-    </div>
-
-    <h2 class="seccion">Instalar en la pantalla de inicio</h2>
-    <p class="ayuda" id="ayuda-instalar">
-      Si aun no la instalaste: abre el menu del navegador (los tres puntos) y elige
-      <strong>Instalar aplicacion</strong> o <strong>Agregar a pantalla de inicio</strong>.
-    </p>
-    <div class="pila">
-      <button id="btn-instalar" class="boton principal" type="button" hidden>Instalar la aplicacion</button>
-    </div>
-
-    <h2 class="seccion">Zona de riesgo</h2>
-    <p class="ayuda" id="espacio"></p>
-    <div class="pila">
-      <button id="btn-borrar-todo" class="boton peligro" type="button">Borrar todas las encuestas</button>
-    </div>
-
-    <p class="pie">
-      Esta aplicacion funciona sin internet. Los datos se guardan unicamente
-      en esta tablet hasta que los descargues.
-    </p>
-
-    <div class="pie-marca">
-      <img src="icons/forus-logo.png" alt="Forus - Consumer Fanatic">
-    </div>
-  </section>
-
-</main>
-
-<!-- ============ VENTANA DE DETALLE ============ -->
 <dialog id="detalle" class="detalle">
   <div class="detalle-cab">
-    <strong>Detalle del registro</strong>
+    <strong>Detalle de la respuesta</strong>
     <button id="cerrar-detalle" class="boton secundario chico" type="button">Cerrar</button>
   </div>
   <div id="detalle-cuerpo"></div>
 </dialog>
 
+<!-- Datos y reglas (se editan para agregar preguntas, plantillas o marcas) -->
 <script src="js/config.js"></script>
+<script src="js/banco-preguntas.js"></script>
+<script src="js/plantillas.js"></script>
+<script src="js/marcas.js"></script>
+
+<!-- Motor (no se edita) -->
+<script src="js/validacion.js"></script>
+<script src="js/campos.js"></script>
 <script src="js/db.js"></script>
 <script src="js/zip.js"></script>
 <script src="js/export.js"></script>
@@ -162,32 +81,17 @@
   pintar();
 })();
 
-/* ---- Boton de instalacion ---- */
-(function () {
-  var pendiente = null;
-  var btn = document.getElementById('btn-instalar');
+/* ---- Instalacion: se guarda el evento para el boton de Ajustes ---- */
+window.addEventListener('beforeinstallprompt', function (e) {
+  e.preventDefault();
+  window.__instalacionPendiente = e;
+});
 
-  window.addEventListener('beforeinstallprompt', function (e) {
-    e.preventDefault();
-    pendiente = e;
-    btn.hidden = false;
-  });
-
-  btn.addEventListener('click', function () {
-    if (!pendiente) return;
-    pendiente.prompt();
-    pendiente.userChoice.then(function () {
-      pendiente = null;
-      btn.hidden = true;
-    });
-  });
-
-  window.addEventListener('appinstalled', function () {
-    btn.hidden = true;
-    document.getElementById('ayuda-instalar').textContent =
-      'La aplicacion ya esta instalada en esta tablet.';
-  });
-})();
+window.addEventListener('appinstalled', function () {
+  window.__instalacionPendiente = null;
+  var a = document.getElementById('ayuda-instalar');
+  if (a) a.textContent = 'La aplicacion ya esta instalada en esta tablet.';
+});
 
 /* ---- Service Worker: es lo que permite abrir la app sin internet ---- */
 if ('serviceWorker' in navigator) {
